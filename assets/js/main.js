@@ -149,7 +149,7 @@
   });
 
   
-   * Skills animation
+    Skills animation
    */
   let skilsContent = select('.skills-content');
   if (skilsContent) {
