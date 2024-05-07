@@ -1,0 +1,130 @@
+:root {
+    --primary-color: #444B6E;
+    --secondary-color: #118AB2;
+    --tertiary-color: #073B4C;
+    --line-spacing: 20px;
+    --line-thickness: 2px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero {
+    border: var(--line-thickness) solid var(--primary-color);
+    border-radius: 8px;
+    padding: 10rem 10rem;
+    background-color: rgba(1, 9, 52, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    min-width: 100px;
+}
+
+
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.line {
+    position: absolute;
+    height: var(--line-thickness);
+    background-color: var(--primary-color);
+}
+
+.top {
+    top: var(--line-spacing);
+    width: 100%;
+}
+
+.bottom {
+    bottom: var(--line-spacing);
+    width: 100%;
+}
+
+.left {
+    left: var(--line-spacing);
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    width: var(--line-thickness);
+}
+
+.right {
+    right: var(--line-spacing);
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    width: var(--line-thickness);
+}
+
+.header--name {
+    font-size: 5rem;
+    animation: fade-in 2s ease;
+    transform-origin: top;
+}
+
+.header--info {
+    font-size: 1.25rem;
+    font-style: italic;
+    animation: fade-in 1.5s ease;
+    transform-origin: top;
+}
+
+.header--info::before {
+    content: '⚡';
+    margin-right: 0.5rem;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+
+@media screen and (max-width: 1130px) {
+    .hero {
+        padding: 5rem;
+        width: 60%;
+    }
+    .header--name {
+        font-size: 4rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hero {
+        padding: 5rem;
+        width: 30%;
+    }
+    .header--name {
+        font-size: 2rem;
+    }
+}
