@@ -11,6 +11,9 @@ let scene,
     rainCount = 12000;
 
 function init() {
+
+    console.log("Initializing the scene");
+
     scene = new THREE.Scene();
     listener = new THREE.AudioListener();
     camera = new THREE.PerspectiveCamera(
