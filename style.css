@@ -24,6 +24,19 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(17, 138, 178, 0.1) 0%, rgba(1, 9, 52, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 canvas {
@@ -33,6 +46,7 @@ canvas {
     width: 100%;
     height: 100%;
     z-index: -1;
+    filter: blur(0.5px);
 }
 
 .card-container {
@@ -41,46 +55,110 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 .visit-card {
-    width: 100%;
-    max-width: 800px;
+    width: 90%;
+    max-width: 1000px;
     aspect-ratio: 16/9;
     background: var(--card-bg);
     border: var(--line-thickness) solid var(--primary-color);
     border-radius: 12px;
-    box-shadow: 0 0 30px rgba(17, 138, 178, 0.3);
+    box-shadow: 0 0 30px rgba(17, 138, 178, 0.3),
+                0 0 60px rgba(17, 138, 178, 0.1),
+                inset 0 0 20px rgba(17, 138, 178, 0.1);
     backdrop-filter: blur(4px);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     animation: card-appear 1s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+.ribbon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ribbon-content {
+    position: absolute;
+    top: 30px;
+    right: -50px;
+    transform: rotate(45deg);
+    width: 230px;
+    background: var(--secondary-color);
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.visit-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--secondary-color), transparent, var(--secondary-color));
+    border-radius: 14px;
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+    opacity: 0.5;
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 2rem;
+    padding: 2.5rem;
 }
 
 .card-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .header--name {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 3rem;
+    margin-bottom: 0.7rem;
     animation: fade-in 1s ease;
 }
 
 .header--info {
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: var(--secondary-color);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(17, 138, 178, 0.8);
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
     animation: fade-in 1.5s ease;
+    position: relative;
+}
+
+.header--info::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
 }
 
 .card-body {
@@ -93,24 +171,24 @@ canvas {
 }
 
 .about-text {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     line-height: 1.6;
-    max-width: 600px;
+    max-width: 800px;
 }
 
 .skills {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 1rem;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
 }
 
 .skill-tag {
     background: var(--primary-color);
     color: white;
-    padding: 0.4rem 1rem;
+    padding: 0.5rem 1.2rem;
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -132,10 +210,10 @@ canvas {
 .social-link {
     color: var(--secondary-color);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.1rem;
     transition: all 0.3s ease;
     position: relative;
-    padding: 8px 12px;
+    padding: 10px 16px;
     border-radius: 6px;
     background-color: rgba(1, 9, 52, 0.3);
     display: inline-block;
@@ -184,6 +262,15 @@ canvas {
     }
 }
 
+@keyframes borderGlow {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
 @media (max-width: 768px) {
     .card-container {
         padding: 1rem;
@@ -193,28 +280,42 @@ canvas {
         width: 95%;
         aspect-ratio: auto;
         height: auto;
-        max-height: 85vh;
+        max-height: 90vh;
     }
     
     .card-content {
-        padding: 1.5rem;
+        padding: 1.8rem;
     }
     
     .header--name {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
     }
     
     .header--info {
-        font-size: 0.9rem;
+        font-size: 1.1rem;
+    }
+    
+    .header--info::after {
+        bottom: -8px;
+        width: 60px;
+        height: 2px;
     }
     
     .about-text {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .skill-tag {
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+    }
+    
+    .ribbon-content {
+        top: 20px;
+        right: -55px;
+        width: 200px;
         font-size: 0.8rem;
-        padding: 0.3rem 0.8rem;
+        padding: 6px 0;
     }
 }
 
@@ -230,7 +331,7 @@ canvas {
         aspect-ratio: auto;
         height: auto;
         min-height: 0;
-        max-height: 480px;
+        max-height: 92vh;
     }
     
     .card-content {
@@ -246,11 +347,18 @@ canvas {
     }
     
     .header--name {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
     
     .header--info {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .header--info::after {
+        bottom: -6px;
+        width: 50px;
+        height: 2px;
     }
     
     .card-body {
@@ -288,6 +396,19 @@ canvas {
         font-size: 0.9rem;
         padding: 6px 10px;
     }
+    
+    .ribbon {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .ribbon-content {
+        top: 18px;
+        right: -55px;
+        width: 190px;
+        font-size: 0.75rem;
+        padding: 5px 0;
+    }
 }
 
 /* For very small screens */
@@ -324,5 +445,18 @@ canvas {
     
     .card-section {
         margin-bottom: 0.8rem;
+    }
+    
+    .ribbon {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .ribbon-content {
+        top: 15px;
+        right: -50px;
+        width: 160px;
+        font-size: 0.7rem;
+        padding: 4px 0;
     }
 }
